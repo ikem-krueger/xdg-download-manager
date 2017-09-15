@@ -1,7 +1,7 @@
 # XDG Download Manager
 
-The XDG Download Manager watches the XDG download folder for finished downloads, check their mime types and move them to the appropriate XDG folder.
+The XDG Download Manager watches the XDG download folder for finished downloads, check their mime type and move them to the appropriate XDG folder.
 
-| Operating system | Dependencies                   |
+| Operating system | Dependencies                    |
 | ---------------- | :------------------------------ |
-| Linux            | Bash, notify-send, inotifywait |
+| Linux            | Bash, notify-send, inotifywait  |
