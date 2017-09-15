@@ -1,0 +1,1 @@
+- [ ] make xdg-download-manager.sh a Python script
