@@ -1,1 +1,1 @@
-- [ ] make xdg-download-manager.sh a Python script
+- [ ] make xdg-download-manager a Python script
