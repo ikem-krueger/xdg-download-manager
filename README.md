@@ -4,4 +4,4 @@ The XDG Download Manager watches the XDG download folder for finished downloads,
 
 | Operating system | Dependencies                    | Status | License  |
 | :--------------- | :------------------------------ | :----- | :------- |
-| Linux            | Bash, notify-send, inotifywait  | Beta   | AGPL-3.0 |
+| Linux            | Bash, inotifywait, notify-send  | Beta   | AGPL-3.0 |
