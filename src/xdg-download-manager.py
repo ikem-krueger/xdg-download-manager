@@ -37,8 +37,12 @@ media_type = {
     "VIDEO": "VIDEOS" 
 }
 
+/*
+https://dustinoprea.com/2015/04/24/using-inotify-to-watch-for-directory-changes-from-python/
+
 inotifywait xdg_download_dir --monitor --quiet --event close_write,moved_to --format "%f"|\
 while read file
 do
   move_file(file) &
 done
+*/
