@@ -43,7 +43,8 @@ https://dustinoprea.com/2015/04/24/using-inotify-to-watch-for-directory-changes-
 inotifywait xdg_download_dir --monitor --quiet --event close_write,moved_to --format "%f"|\
 while read file
 do
-  goo.gl/Lafks6
+  https://www.saltycrane.com/blog/2008/09/simplistic-python-thread-example/
+  
   move_file(file) &
 done
 */
