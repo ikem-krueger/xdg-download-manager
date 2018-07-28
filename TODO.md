@@ -1,1 +1,6 @@
-- [ ] make xdg-download-manager a Python script
+- [ ] clamav!
+- [ ] blacklist
+- [ ] dry run mode
+- [ ] manual sort mode
+- [ ] recursive sort
+

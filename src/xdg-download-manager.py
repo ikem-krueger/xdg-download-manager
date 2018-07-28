@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# - clamav!
-# - blacklist
-# - dry run mode
-# - manual sort mode
-# - recursive sort
-
 import json
 import subprocess
 import re
@@ -22,8 +16,8 @@ def get_xdg_folder(name, verbose=True):
     
     return xdg_folder
 
-def load_media_types():
-    media_types_file = open("media.types").read()
+def load_media_types(filename="media.types"):
+    media_types_file = open(filename).read()
 
     media_types = {}
     
@@ -34,6 +28,9 @@ def load_media_types():
             media_types[mime_type] = media_type
             
     return media_types
+
+def load_xdg_folder(filename="xdg_folder.json"):
+    return json.load(open(filename))
 
 def get_mime_type(filename):
     mime_type = subprocess.check_output(["file", "--brief", "--mime-type", filename]).decode("utf-8").strip()
@@ -54,7 +51,7 @@ def move_file(filename, dry_run=False):
     media_type = get_media_type(filename)
     xdg_dest_dir = get_xdg_folder(xdg_folder[media_type])
 
-    if filename.endswith(".part"): # Firefox workaround
+    if filename in blacklist: 
         print("Skip {}...".format(filename))
     else:
         print("Move {} to {}...".format(filename, xdg_dest_dir))
@@ -64,23 +61,32 @@ def move_file(filename, dry_run=False):
 
         subprocess.call(["notify-send", "-i", "media-floppy", "Download finished!", filename])
 
-xdg_download_dir = get_xdg_folder("DOWNLOAD", verbose=False)
+def action(action, filename, *args):
+    print("action: {}".format(action.__name__))
+
+    action(filename, *args)
+
+watch_dir = get_xdg_folder("DOWNLOAD", verbose=False)
+
+blacklist = [".part"]
 
 media_types = load_media_types()
-
-xdg_folder = json.load(open("xdg_folder.json"))
+xdg_folder = load_xdg_folder()
 
 # https://pypi.org/project/inotify_simple/
 inotify = INotify()
+
 watch_flags = flags.CLOSE_WRITE | flags.MOVED_TO
-wd = inotify.add_watch(xdg_download_dir, watch_flags)
+
+inotify.add_watch(watch_dir, watch_flags)
 
 for event in inotify.read():
-    filename = xdg_download_dir + "/" + event.name
+    filename = watch_dir + "/" + event.name
     
+    print("watch_dir: {}".format(watch_dir))
     print("filename: {}".format(filename))
 
     # https://www.saltycrane.com/blog/2008/09/simplistic-python-thread-example/
-    t = Thread(target=move_file, args=(filename, ))
+    t = Thread(target=action, args=(move_file, filename))
     t.start()
 
