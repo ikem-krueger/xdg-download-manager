@@ -51,7 +51,7 @@ def get_media_type(filename):
 
     return media_type
 
-def move_file(filename, dry_run=False, notifcation=True):
+def move_file(filename, dry_run=False, notification=True):
     media_type = get_media_type(filename)
     xdg_dest_dir = get_xdg_folder(xdg_folder[media_type])
 
