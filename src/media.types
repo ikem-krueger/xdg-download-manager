@@ -45,9 +45,6 @@ video/x-sgi-video		[VIDEO]
 
 application/ogg application/x-ogg		[MULTIMEDIA]
 audio/x-pn-realaudio-plugin	[MULTIMEDIA]
-model/iges	[MULTIMEDIA]
-model/mesh	[MULTIMEDIA]
-model/vrml	[MULTIMEDIA]
 
 application/postscript	[OFFICE]
 application/x-latex	[OFFICE]
@@ -80,4 +77,8 @@ application/x-gzip	[ARCHIVE]
 application/x-stuffit	[ARCHIVE]
 application/x-tar	[ARCHIVE]
 application/zip application/x-zip	[ARCHIVE]
+
+model/iges	[3D]
+model/mesh	[3D]
+model/vrml	[3D]
 
