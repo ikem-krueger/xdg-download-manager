@@ -30,7 +30,11 @@ def load_media_types(filename="media.types"):
     return media_types
 
 def load_xdg_folder(filename="xdg_folder.json"):
-    return json.load(open(filename))
+    xdg_folder_file = open(filename)
+
+    xdg_folder = json.load(xdg_folder_file)
+
+    return xdg_folder
 
 def get_mime_type(filename):
     mime_type = subprocess.check_output(["file", "--brief", "--mime-type", filename]).decode("utf-8").strip()
@@ -41,7 +45,7 @@ def get_mime_type(filename):
 
 def get_media_type(filename):
     mime_type = get_mime_type(filename)
-    media_type = media_types.get(mime_type, "OTHER")
+    media_type = media_types.get(mime_type, "UNKNOWN")
 
     print("media_type: {}".format(media_type))
 

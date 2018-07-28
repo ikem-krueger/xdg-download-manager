@@ -1,13 +1,14 @@
 {
-    "TEXT": "DOCUMENTS", 
-    "OFFICE": "DOCUMENTS", 
+    "UNKNOWN": "DOWNLOAD", 
     "BITMAP": "PICTURES", 
     "DRAWING": "PICTURES", 
     "AUDIO": "MUSIC", 
     "VIDEO": "VIDEOS", 
     "MULTIMEDIA": "DOWNLOAD", 
-    "ARCHIVE": "DOWNLOAD", 
+    "OFFICE": "DOCUMENTS", 
+    "TEXT": "DOCUMENTS", 
     "EXECUTABLE": "DOWNLOAD", 
-    "OTHER": "DOWNLOAD"
+    "ARCHIVE": "DOWNLOAD", 
+    "3D": "DOWNLOAD"
 }
 
