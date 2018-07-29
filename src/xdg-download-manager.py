@@ -43,16 +43,22 @@ def get_media_type(filename):
 
     return media_type
 
-def get_dest_dir(filename, verbose=True):
+def get_xdg_user_dir(name):
+    xdg_user_dir = subprocess.check_output(["xdg-user-dir", name]).decode("utf-8").strip()
+    
+    return xdg_user_dir
+
+def get_dest_dir(filename, verbose=True)
     media_type = get_media_type(filename)
     dest_dir = dest_dirs[media_type]
 
     if not os.path.isdir(dest_dir):
-        dest_dir = subprocess.check_output(["xdg-user-dir", dest_dir]).decode("utf-8").strip()
-    
+        name = dest_dir
+        dest_dir = get_xdg_dir(name)
+
     if verbose:
         print("dest_dir: {}".format(dest_dir))
-    
+
     return dest_dir
 
 def move_file(filename, dry_run=False, notification=True):
@@ -77,7 +83,7 @@ def action(action, filename, *args):
 media_types = load_media_types()
 dest_dirs = load_dest_dirs()
 
-watch_dir = get_dest_dir("DOWNLOAD", verbose=False)
+watch_dir = get_xdg_user_dir("DOWNLOAD")
 
 blacklist = [".part"]
 
