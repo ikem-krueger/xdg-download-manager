@@ -75,10 +75,10 @@ def move_file(filename, dry_run=False, notification=True):
         if notification:
             subprocess.call(["notify-send", "-i", "media-floppy", "Download finished!", filename])
 
-def action(action, filename, *args):
+def action(action, filename, *args, **kwargs):
     print("action: {}".format(action.__name__))
 
-    action(filename, *args)
+    action(filename, *args, **kwargs)
 
 media_types = load_media_types()
 dest_dirs = load_dest_dirs()
