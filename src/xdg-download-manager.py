@@ -74,12 +74,12 @@ def action(action, filename, *args):
 
     action(filename, *args)
 
+media_types = load_media_types()
+dest_dirs = load_dest_dirs()
+
 watch_dir = get_dest_dir("DOWNLOAD", verbose=False)
 
 blacklist = [".part"]
-
-media_types = load_media_types()
-dest_dirs = load_dest_dirs()
 
 # https://pypi.org/project/inotify_simple/
 inotify = INotify()
