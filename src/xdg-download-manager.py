@@ -21,6 +21,13 @@ def load_media_types(filename="media.types"):
             
     return media_types
 
+def load_dest_dirs(filename="dest_dirs.json"):
+    dest_dirs_file = open(filename)
+
+    dest_dirs = json.load(dest_dirs_file)
+
+    return dest_dirs
+
 def get_mime_type(filename):
     mime_type = subprocess.check_output(["file", "--brief", "--mime-type", filename]).decode("utf-8").strip()
 
@@ -36,14 +43,10 @@ def get_media_type(filename):
 
     return media_type
 
-def load_dest_dirs(filename="dest_dirs.json"):
-    dest_dirs_file = open(filename)
+def get_dest_dir(filename, verbose=True):
+    media_type = get_media_type(filename)
+    dest_dir = dest_dirs[media_type]
 
-    dest_dirs = json.load(dest_dirs_file)
-
-    return dest_dirs
-
-def get_dest_dir(dest_dir, verbose=True):
     if not os.path.isdir(dest_dir):
         dest_dir = subprocess.check_output(["xdg-user-dir", dest_dir]).decode("utf-8").strip()
     
@@ -53,15 +56,14 @@ def get_dest_dir(dest_dir, verbose=True):
     return dest_dir
 
 def move_file(filename, dry_run=False, notification=True):
-    media_type = get_media_type(filename)
-    dest_dir = get_dest_dir(dest_dirs[media_type])
+    dest_dir = get_dest_dir(filename)
     
     if filename in blacklist: 
         print("Skip {}...".format(filename))
     else:
         print("Move {} to {}...".format(filename, dest_dir))
 
-        if not dry_run and xdg_dest_dir != watch_dir:
+        if not dry_run and dest_dir != watch_dir:
             subprocess.call(["mv", "-f", filename, dest_dir])
 
         if notification:
