@@ -60,7 +60,7 @@ def move_file(filename, dry_run=False, notification=True):
     else:
         print("Move {} to {}...".format(filename, xdg_dest_dir))
 
-        if not dry_run:
+        if not dry_run and xdg_dest_dir != watch_dir:
             subprocess.call(["mv", "-f", filename, xdg_dest_dir])
 
         if notification:
