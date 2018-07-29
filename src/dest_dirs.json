@@ -1,0 +1,12 @@
+{
+    "TEXT": "DOCUMENTS", 
+    "OFFICE": "DOCUMENTS", 
+    "BITMAP": "PICTURES", 
+    "DRAWING": "PICTURES", 
+    "AUDIO": "MUSIC", 
+    "VIDEO": "VIDEOS", 
+    "MULTIMEDIA": "DOWNLOAD", 
+    "ARCHIVE": "DOWNLOAD", 
+    "EXECUTABLE": "DOWNLOAD", 
+    "OTHER": "DOWNLOAD"
+}

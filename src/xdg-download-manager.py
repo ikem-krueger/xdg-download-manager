@@ -8,14 +8,6 @@ import re
 from inotify_simple import INotify, flags
 from threading import Thread
 
-def get_xdg_folder(name, verbose=True):
-    xdg_folder = subprocess.check_output(["xdg-user-dir", name]).decode("utf-8").strip()
-    
-    if verbose:
-        print("dest_dir: {}".format(xdg_folder))
-    
-    return xdg_folder
-
 def load_media_types(filename="media.types"):
     media_types_file = open(filename).read()
 
@@ -28,13 +20,6 @@ def load_media_types(filename="media.types"):
             media_types[mime_type] = media_type
             
     return media_types
-
-def load_xdg_folder(filename="xdg_folder.json"):
-    xdg_folder_file = open(filename)
-
-    xdg_folder = json.load(xdg_folder_file)
-
-    return xdg_folder
 
 def get_mime_type(filename):
     mime_type = subprocess.check_output(["file", "--brief", "--mime-type", filename]).decode("utf-8").strip()
@@ -51,12 +36,25 @@ def get_media_type(filename):
 
     return media_type
 
+def load_dest_dirs(filename="dest_dirs.json"):
+    dest_dirs_file = open(filename)
+
+    dest_dirs = json.load(dest_dirs_file)
+
+    return dest_dirs
+
+def get_dest_dir(dest_dir, verbose=True):
+    if not os.path.isdir(dest_dir):
+        dest_dir = subprocess.check_output(["xdg-user-dir", dest_dir]).decode("utf-8").strip()
+    
+    if verbose:
+        print("dest_dir: {}".format(dest_dir))
+    
+    return dest_dir
+
 def move_file(filename, dry_run=False, notification=True):
     media_type = get_media_type(filename)
-    dest_dir = xdg_folder[media_type]
-    
-    if not os.path.isdir(xdg_dest_dir):
-        dest_dir = get_xdg_folder(dest_dir)
+    dest_dir = get_dest_dir(dest_dirs[media_type])
     
     if filename in blacklist: 
         print("Skip {}...".format(filename))
@@ -74,12 +72,12 @@ def action(action, filename, *args):
 
     action(filename, *args)
 
-watch_dir = get_xdg_folder("DOWNLOAD", verbose=False)
+watch_dir = get_dest_dir("DOWNLOAD", verbose=False)
 
 blacklist = [".part"]
 
 media_types = load_media_types()
-xdg_folder = load_xdg_folder()
+dest_dirs = load_dest_dirs()
 
 # https://pypi.org/project/inotify_simple/
 inotify = INotify()
@@ -97,4 +95,3 @@ for event in inotify.read():
     # https://www.saltycrane.com/blog/2008/09/simplistic-python-thread-example/
     t = Thread(target=action, args=(move_file, filename))
     t.start()
-
