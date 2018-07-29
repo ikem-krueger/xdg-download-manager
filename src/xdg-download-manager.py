@@ -12,7 +12,7 @@ def get_xdg_folder(name, verbose=True):
     xdg_folder = subprocess.check_output(["xdg-user-dir", name]).decode("utf-8").strip()
     
     if verbose:
-        print("xdg_dest_dir: {}".format(xdg_folder))
+        print("dest_dir: {}".format(xdg_folder))
     
     return xdg_folder
 
@@ -53,18 +53,18 @@ def get_media_type(filename):
 
 def move_file(filename, dry_run=False, notification=True):
     media_type = get_media_type(filename)
-    xdg_dest_dir = xdg_folder[media_type]
+    dest_dir = xdg_folder[media_type]
     
     if not os.path.isdir(xdg_dest_dir):
-        xdg_dest_dir = get_xdg_folder(xdg_dest_dir)
+        dest_dir = get_xdg_folder(dest_dir)
     
     if filename in blacklist: 
         print("Skip {}...".format(filename))
     else:
-        print("Move {} to {}...".format(filename, xdg_dest_dir))
+        print("Move {} to {}...".format(filename, dest_dir))
 
         if not dry_run and xdg_dest_dir != watch_dir:
-            subprocess.call(["mv", "-f", filename, xdg_dest_dir])
+            subprocess.call(["mv", "-f", filename, dest_dir])
 
         if notification:
             subprocess.call(["notify-send", "-i", "media-floppy", "Download finished!", filename])
