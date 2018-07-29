@@ -53,7 +53,6 @@ def get_media_type(filename):
 
 def move_file(filename, dry_run=False, notification=True):
     media_type = get_media_type(filename)
-    
     xdg_dest_dir = xdg_folder[media_type]
     
     if not os.path.isdir(xdg_dest_dir):
