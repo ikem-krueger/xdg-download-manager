@@ -4,6 +4,7 @@
 import json
 import subprocess
 import re
+import os
 
 from inotify_simple import INotify, flags
 from threading import Thread
@@ -44,17 +45,20 @@ def get_media_type(filename):
     return media_type
 
 def get_xdg_user_dir(name):
+    # possible values for "name" are: DOCUMENTS, DOWNLOAD, MUSIC, PICTURES, VIDEOS
     xdg_user_dir = subprocess.check_output(["xdg-user-dir", name]).decode("utf-8").strip()
     
     return xdg_user_dir
 
-def get_dest_dir(filename, verbose=True)
+def get_dest_dir(filename, verbose=True):
     media_type = get_media_type(filename)
     dest_dir = dest_dirs[media_type]
 
-    if not os.path.isdir(dest_dir):
-        name = dest_dir
-        dest_dir = get_xdg_dir(name)
+    if dest_dir.startswith("/"):
+        if not os.path.isdir(dest_dir):
+            dest_dir = watch_dir
+    else:
+        dest_dir = get_xdg_user_dir(dest_dir)
 
     if verbose:
         print("dest_dir: {}".format(dest_dir))
@@ -103,3 +107,4 @@ for event in inotify.read():
     # https://www.saltycrane.com/blog/2008/09/simplistic-python-thread-example/
     t = Thread(target=action, args=(move_file, filename))
     t.start()
+
