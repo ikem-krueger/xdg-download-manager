@@ -73,7 +73,7 @@ def thread(func):
     return wrapper
 
 @thread
-def move_file(filename, dry_run=False, notification=True):
+def move_file(filename, dry_run=False, notification=False):
     dest_dir = get_dest_dir(filename)
         
     print("filename: {}".format(filename))
@@ -105,8 +105,9 @@ inotify.add_watch(watch_dir, watch_flags)
 
 print("watch_dir: {}".format(watch_dir))
 
-for event in inotify.read():
-    filename = watch_dir + "/" + event.name
-    
-    move_file(filename)
+while True:
+    for event in inotify.read():
+        filename = watch_dir + "/" + event.name
+        
+        move_file(filename)
 
