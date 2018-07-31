@@ -65,8 +65,18 @@ def get_dest_dir(filename, verbose=True):
 
     return dest_dir
 
+def thread(func):
+    def wrapper(*args, **kwargs):
+        # https://www.saltycrane.com/blog/2008/09/simplistic-python-thread-example/
+        t = Thread(target=func, args=args, kwargs=kwargs)
+        t.start()
+    return wrapper
+
+@thread
 def move_file(filename, dry_run=False, notification=True):
     dest_dir = get_dest_dir(filename)
+        
+    print("filename: {}".format(filename))
     
     if filename in blacklist: 
         print("Skip {}...".format(filename))
@@ -78,11 +88,6 @@ def move_file(filename, dry_run=False, notification=True):
 
         if notification:
             subprocess.call(["notify-send", "-i", "media-floppy", "Download finished!", filename])
-
-def action(function, *args, **kwargs):
-    print("action: {}".format(function.__name__))
-
-    function(*args, **kwargs)
 
 media_types = load_media_types()
 dest_dirs = load_dest_dirs()
@@ -98,13 +103,10 @@ watch_flags = flags.CLOSE_WRITE | flags.MOVED_TO
 
 inotify.add_watch(watch_dir, watch_flags)
 
+print("watch_dir: {}".format(watch_dir))
+
 for event in inotify.read():
     filename = watch_dir + "/" + event.name
     
-    print("watch_dir: {}".format(watch_dir))
-    print("filename: {}".format(filename))
-
-    # https://www.saltycrane.com/blog/2008/09/simplistic-python-thread-example/
-    t = Thread(target=action, args=(move_file, filename))
-    t.start()
+    move_file(filename)
 
