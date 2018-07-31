@@ -38,7 +38,7 @@ def get_mime_type(filename):
 
 def get_media_type(filename):
     mime_type = get_mime_type(filename)
-    media_type = media_types.get(mime_type, "UNKNOWN")
+    media_type = media_types.get(mime_type, "OTHER")
 
     print("media_type: {}".format(media_type))
 
