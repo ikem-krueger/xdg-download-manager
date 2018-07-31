@@ -8,6 +8,7 @@
     "OFFICE": "DOCUMENTS", 
     "TEXT": "DOCUMENTS", 
     "EXECUTABLE": "DOWNLOAD", 
-    "ARCHIVE": "DOWNLOAD"
+    "ARCHIVE": "DOWNLOAD", 
+    "3D": "DOWNLOAD"
 }
 
