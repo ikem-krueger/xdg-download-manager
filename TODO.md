@@ -1,3 +1,5 @@
+- [ ] use worker threads and queue
+- [ ] make "filename" an object
 - [ ] write a service file
 - [ ] debian package
 - [ ] inotify mode
