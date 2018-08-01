@@ -4,7 +4,7 @@ The XDG Download Manager watches the XDG download folder for finished downloads,
 
 | Operating system | Dependencies                                                | Status | License  |
 | :--------------- | :---------------------------------------------------------- | :----- | :------- |
-| Linux            | Python 3.x, inotify_simple, xdg-user-dir, file, notify-send | Beta   | AGPL-3.0 |
+| Linux, Debian    | Python 3.x, inotify_simple, xdg-user-dir, file, notify-send | Beta   | AGPL-3.0 |
 
 ## Installation:
 
