@@ -1,3 +1,5 @@
+- [ ] write a service file
+- [ ] debian package
 - [ ] inotify mode
 - [ ] manual sort mode
 - [ ] recursive option
