@@ -34,6 +34,7 @@ audio/x-pn-realaudio	[AUDIO]
 audio/x-realaudio	[AUDIO]
 
 application/x-shockwave-flash	[VIDEO]
+video/mp4	[VIDEO]
 video/mpeg application/mpeg	[VIDEO]
 video/ogg	[VIDEO]
 video/ogg video/x-ogg	[VIDEO]
